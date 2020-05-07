@@ -1,0 +1,131 @@
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+@font-face {
+    font-family: "font_curl";
+    src: url("fonts/quanto/Quanto.otf");
+}
+
+@font-face{
+    font-family: "font_norm";
+    src: url("fonts/caviar_dreams/CaviarDreams.ttf")
+}
+
+@font-face{
+    font-family: "font_bold";
+    src: url("fonts/caviar_dreams/CaviarDreams_Bold.ttf")
+}
+
+@font-face{
+    font-family: "font_italic";
+    src: url("fonts/caviar_dreams/CaviarDreams_Italic.ttf")
+}
+
+.head-container {
+    display: flex;
+    align-items: center;
+    padding-top: 0.5rem;
+    padding-right: 1rem;
+    padding-bottom: 0.5rem;
+    padding-left: 1rem;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.navbar-brand {
+    font-family: font_curl;
+    color: black;
+    font-size: 40px;
+}
+
+.ad {
+    font-family: font_norm;
+}
+
+.space {
+    height: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+.box {
+    margin-bottom: 60px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 10px;
+    width: 500px;
+    background-color: #1E2749;
+    border-radius: 3px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    box-sizing: border-box;
+}
+
+.btn-group {
+    margin: 30px auto;
+    width: 70%;
+}
+
+.btn-group .btn-sign, .btn-group .btn-login {
+    border-radius: 0;
+    border: none;
+    font-family: font_bold;
+}
+
+.btn-group .btn-sign {
+    background-color: rgba(102, 203, 240, 0.7);
+    color: black;
+}
+
+.btn-group .btn-login {
+    background-color: rgba(59, 98, 138, 0.7);
+    color: #FAFAFF;
+}
+
+.title {
+    color: #FAFAFF;
+    font-family: font_norm;
+}
+
+h2 {
+    margin: 5px auto;
+}
+
+.submit-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn-submit {
+    background-color: rgba(102, 203, 240, 0.7);
+    font-family: font_bold;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    border-radius: 0;
+}
+
+.footer {
+    background-color: #30343F;
+    margin-top: 20px;
+    height: 50px;
+    text-align: center;
+    font-family: font_italic;
+    color: #FAFAFF;
+    padding: 15px;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.not-visible {
+    display: none;
+}
+
+#sign-error, #log-error {
+    text-align: center;
+    color: red;
+}
