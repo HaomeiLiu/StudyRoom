@@ -1,3 +1,47 @@
+<?php
+    require "config/config.php";
+
+    session_start();
+    echo $_SESSION['user_id'];
+    if(!isset($_SESSION['user_id']) || empty($_SESSION['user_id'])){
+        header("Location: http://localhost:8888/project/git_track/login.php");
+        exit;
+    }
+    $user_id = (int) $_SESSION['user_id'];
+
+    $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+        if ( $mysqli->connect_errno ) {
+            echo $mysqli->connect_error;
+            exit();
+        }
+    $mysqli->set_charset('utf8');
+
+    // GET USER INFO
+    $sql = "SELECT user_room_id, user_auth FROM users WHERE user_id = ". $user_id. ";";
+    $results = $mysqli->query($sql);
+    $row = $results->fetch_assoc();
+
+    // room null, display join room
+    $displayJoin = true;
+    $auth = false;
+    if(!isset($row['user_room_id']) || empty($row['user_room_id'])){
+        $displayJoin = true;
+    }
+    else{
+        if(isset($row['user_auth']) && !empty($row['user_auth'])){
+            $auth = true;
+        }
+        $displayJoin = false;
+        $room_id = $row['user_room_id'];
+        // Load room info
+        $sql = "SELECT * FROM studyroom WHERE studyroom_id = ". $room_id .";";
+        $results = $mysqli->query($sql);
+        $row = $results->fetch_assoc();
+        $room_name = $row['studyroom_name'];
+        $room_ann = $row['studyroom_ann'];
+        $room_count = $row['studyroom_count'];
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -115,6 +159,10 @@
         .room-info .action {
             margin-top: 20px;
             margin-bottom: 20px;
+        }
+
+        .not-visible {
+            display: none;
         }
     </style>
 </head>

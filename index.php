@@ -1,3 +1,102 @@
+<?php
+    require "config/config.php";
+    session_start();
+    if(!isset($_SESSION['user_id']) || empty($_SESSION['user_id'])){
+        header("Location: http://localhost:8888/project/git_track/login.php");
+        exit;
+    }
+    $user_id = (int) $_SESSION['user_id'];
+
+    // FROM sign_confirmation.php
+    if(isset($_POST['supp_submit'])){
+        $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+        if ( $mysqli->connect_errno ) {
+            echo $mysqli->connect_error;
+            exit();
+        }
+        $mysqli->set_charset('utf8');
+        // if(isset($_POST["user_id"]) && !empty($_POST["user_id"])){
+        //     $user_id = $_POST["user_id"];
+        // }
+        // else{
+        //     exit("Unexpected error, no user_id from sign conf");
+        // }
+        if(isset($_POST["nname"]) && !empty($_POST["nname"])){
+            $nname = $_POST["nname"];
+        }
+        else{
+            $release_date = NULL;
+        }
+        if(isset($_POST["avatar-num"]) && !empty($_POST["avatar-num"])){
+            $avatar_num = $_POST["avatar-num"];
+        }
+        else{
+            $avatar_num = 0;
+        }
+        if(isset($_POST["bio"]) && !empty($_POST["bio"])){
+            $bio = $_POST["bio"];
+        }
+        else{
+            $bio = NULL;
+        }
+        $statement = $mysqli->prepare(
+            "UPDATE users SET user_nickname =?, user_sign = ?, user_avatar = ? WHERE user_id = ?"
+        );
+        $statement->bind_param("ssii",$nname, $bio, $avatar_num, $user_id);
+
+        $executed = $statement->execute();
+        if(!$executed) {
+            echo $mysqli->error;
+        }
+    
+        if($statement->affected_rows == 1){
+            $isUpdated = true;
+        }
+    }
+    // GET USER INFO FROM DB
+    $sql = "SELECT * FROM users WHERE user_id = ". $user_id. ";";
+    $results = $mysqli->query($sql);
+    $row = $results->fetch_assoc();
+
+    if($row['user_nickname'] != null){
+        $displayName = $row['user_nickname'];
+    }
+    else{
+        $displayName = $row['user_fname'];
+    }
+
+    if($row['user_timestamp'] != null){
+        if($row['user_timestamp'] < date("Y-m-d")){
+            // Not current date's record
+            $displayTime = 0;
+        }
+        else{
+            if($row['user_timestamp'] != null){
+                // Defensive, should always be true
+                $displayTime = $row['user_timestamp'];
+            }
+            else{
+                $displayTime = 0;
+            }
+        }
+    }
+    else{
+        $displayTime = 0;
+    }
+
+    if($row['user_avatar'] != null){
+        // defensive
+        $displayAvatar = $row['user_avatar'];
+        $sql_ava = "SELECT avatar_path FROM avatar WHERE avatar_id = ". $displayAvatar. ";";
+        $results_ava = $mysqli->query($sql_ava);
+        $row_ava = $results_ava->fetch_assoc();
+        $displayPath = $row_ava['avatar_path'];
+    }
+    else{
+        $displayPath = "images/avatar/0.png";
+    }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -185,17 +284,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="http://303.itpwebdev.com/~haomeili/assignment13/stats.html">Statistics</a>
                 </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Disabled</a>
-                </li> -->
-                <!-- <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" role="button" href="#!" id="dropdownExample" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownExample">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li> -->
             </ul>
             <button class="navbar-toggler navbar-toggler-right navbar-icon" type="button" data-toggle="collapse"
                 data-target="#navbar-mobile" aria-controls="navbar-mobile" aria-expanded="false"
@@ -207,9 +295,9 @@
             <div class="navbar-collapse collapse ml-auto" id="navbar-mobile">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-image">
-                        <img src="images/avatar_default.png" alt="">
+                        <img src="<?php echo $displayPath;?>" alt="">
                         <div class="nav-info">
-                            User Name
+                            <?php echo $displayName;?>
                         </div>
                     </li>
                     <li class="nav-item" id="profile-btn">
@@ -230,8 +318,8 @@
         <div class="welcome-img">
             <img class="img-fluid" src="images/study.png">
         </div>
-        <div class="welcome-msg">Welcome, USER!</div>
-        <div class="welcome-prompt">You have focused 0 minutes today.</div>
+        <div class="welcome-msg">Welcome, <?php echo $displayName;?>!</div>
+        <div class="welcome-prompt">You have focused <?php echo $displayTime;?> minutes today.</div>
     </div>
 
     <!-- Display Modules -->
@@ -261,7 +349,7 @@
     </div>
     <!-- Footer -->
     <div class="container-fluid footer">
-        StudyRoom 2020. By Haomei Liu.
+        StudyRoom 2020.
     </div>
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"

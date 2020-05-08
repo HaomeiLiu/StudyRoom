@@ -1,3 +1,6 @@
+<?php
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,14 +41,14 @@
                     <div class="col-6">
                         <div class="form-group input-item">
                             <label for="fname"></label>
-                            <input type="text" required class="form-control" id="fname" placeholder="First Name"
+                            <input type="text" required class="form-control" name="fname" id="fname" placeholder="First Name"
                                 autocomplete="off">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group input-item">
                             <label for="lname"></label>
-                            <input type="text" required class="form-control" id="lname" placeholder="Last Name"
+                            <input type="text" required class="form-control" id="lname" name="lname" placeholder="Last Name"
                                 autocomplete="off">
                         </div>
                     </div>
@@ -54,7 +57,7 @@
                     <div class="col-12">
                         <div class="form-group">
                             <label for="email"></label>
-                            <input type="email" class="form-control" required id="email" placeholder="Email Address"
+                            <input type="email" class="form-control" required id="email" name="email" placeholder="Email Address"
                                 autocomplete="email">
                         </div>
                     </div>
@@ -63,7 +66,8 @@
                     <div class="col-12">
                         <div class="form-group">
                             <label for="password"></label>
-                            <input type="password" required class="form-control" id="password" placeholder="Password"
+                            <input type="password" required class="form-control" id="password" 
+                            name="password_sign" placeholder="Password"
                                 autocomplete="off"
                                 minlength="6" maxlength="20">
                         </div>
@@ -80,17 +84,17 @@
                 </div>
                 <div class="row">
                     <div class="col-12 submit-container">
-                        <button type="submit" class="btn btn-submit" id="sign-submit">Create Account</button>
+                        <button type="submit" class="btn btn-submit" name="sign_submit" id="sign-submit">Create Account</button>
                     </div>
                 </div>
             </form>
             <div id="log-container" class="not-visible">
-                <form id="log-form">
+                <form id="log-form" action="log_confirmation.php" method="POST">
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="email"></label>
-                                <input type="email" class="form-control" required id="email-log"
+                                <input type="email" class="form-control" required id="email-log" name="email-log" 
                                     placeholder="Email Address" autocomplete="email">
                             </div>
                         </div>
@@ -99,14 +103,14 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="password"></label>
-                                <input type="password" required class="form-control" id="password-log"
+                                <input type="password" required class="form-control" id="password-log" name="password-log" 
                                     placeholder="Password" autocomplete="off" minlength="6" maxlength="20">
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12 submit-container">
-                            <button type="submit" class="btn btn-submit" id="log-submit">Log In</button>
+                            <button type="submit" class="btn btn-submit" id="log-submit" name="log-submit">Log In</button>
                         </div>
                     </div>
                 </form>

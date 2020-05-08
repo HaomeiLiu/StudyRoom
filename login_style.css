@@ -129,3 +129,76 @@ h2 {
     text-align: center;
     color: red;
 }
+
+.to-login {
+    margin: 20px auto;
+    text-align: center;
+    padding: 20px;
+}
+
+.to-login p {
+    font-family: font_italic;
+    color: #FAFAFF;
+}
+
+.add_info {
+    padding: 20px;
+}
+
+.add_info h3{
+    color: #FAFAFF;
+    font-family: font_norm;
+    text-align: center;
+}
+
+.nname-container, .bio-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nname-container .form-group, .bio-container .form-group {
+    width: 70%;
+}
+
+.form-group label {
+    color: #FAFAFF;
+    font-family: font_norm;
+    text-align: center;
+    width: 100%;
+}
+
+#avatar-pick {
+    display: flex;
+    background-color: #1E2749;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    padding-inline-start: 0;
+    margin-bottom: 0;
+}
+
+#avatar-pick .pic {
+    width: 60px;
+    height: 60px;
+    box-sizing: border-box;
+    margin: 10px;
+}
+
+#avatar-pick .pic:hover {
+    opacity: 0.8;
+}
+
+#avatar-pick .pic::marker {
+    opacity: 0;
+}
+
+.selected {
+    opacity: 0.7;
+    border: 3px solid #FAFAFF;
+}
+
+.bio-container .form-control {
+    height: 70px;
+    text-align: start;
+}
